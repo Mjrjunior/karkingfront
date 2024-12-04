@@ -10,8 +10,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+interface Vehicle {
+  plate: string;
+  entryAt: string;
+  payToken: string;
+  paidAmount: number;
+  paidAt: string;
+  exitLimit: string;
+  exitAt: string;
+}
+
 export default function Dashboard() {
-  const [vehicles, setVehicles] = useState([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   useEffect(() => {
     document.title = "Admin | Embarc Parking";
