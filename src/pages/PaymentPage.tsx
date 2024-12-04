@@ -23,7 +23,7 @@ interface Vehicle {
 export default function PaymentPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { placaInfo } = location.state || {};
+  const { placaInfo, nPlaca } = location.state || {};
   const [vehicle, setVehicle] = useState<Vehicle>({
     entryAt: "",
     plate: "",
@@ -31,11 +31,10 @@ export default function PaymentPage() {
     paidAmount: 0,
   });
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [token, setToken] = useState<string>("");
 
   useEffect(() => {
-    if (placaInfo && placaInfo.length > 0) {
-      setVehicle(placaInfo[0]);
-    }
+    setVehicle(placaInfo);
     document.title = "Pagamento | Embarc Parking";
   }, [placaInfo]);
 
@@ -68,7 +67,7 @@ export default function PaymentPage() {
   const handlePayment = async () => {
     try {
       const response = await fetch(
-        `https://karking-api.zaqbit.com/vehicles/${vehicle.plate}/pay`,
+        `https://karking-api.zaqbit.com/vehicles/${nPlaca}/pay`,
         {
           method: "POST",
           headers: {
@@ -76,7 +75,7 @@ export default function PaymentPage() {
             "X-API-Key": import.meta.env.VITE_API_KEY,
           },
           body: JSON.stringify({
-            token: vehicle.payToken,
+            token: token,
           }),
         }
       );
@@ -109,7 +108,7 @@ export default function PaymentPage() {
           <img src={brazilFlag} alt="" className="absolute top-[2px] right-1" />
         </div>
         <input
-          value={vehicle.plate}
+          value={nPlaca}
           type="text"
           name="input"
           id="input"
@@ -137,12 +136,19 @@ export default function PaymentPage() {
           <div className="flex gap-[10px] items-center">
             <img src={dollarIcon} alt="" />
             <span className="text-[1.25rem] text-white font-poppins">
-              R$ {vehicle.paidAmount.toFixed(2)}
+              R$ {vehicle.amountToPay}
             </span>
           </div>
         </div>
       </div>
-      <Button content="efetuar pagamento" onClick={handlePayment} />
+      <div className="flex justify-center items-center flex-col gap-3">
+        <input
+          type="text"
+          value={token}
+          onChange={(e) => setToken(e.target.value)}
+        />
+        <Button content="efetuar pagamento" onClick={handlePayment} />
+      </div>
     </Container>
   );
 }

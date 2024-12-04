@@ -25,8 +25,9 @@ function App() {
       if (!response.ok) {
         throw new Error("Erro na requisição");
       }
+      console.log("response", response);
       const data = await response.json();
-      navigate("/payment", { state: { placaInfo: data } });
+      navigate("/payment", { state: { placaInfo: data, nPlaca: placa} });
     } catch (error) {
       console.error("Erro ao buscar os dados:", error);
       alert("Placa não encontrada");
