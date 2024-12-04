@@ -17,6 +17,7 @@ interface Vehicle {
   entryAt: string;
   plate: string;
   payToken: string;
+  paidAmount: number;
 }
 
 export default function PaymentPage() {
@@ -27,6 +28,7 @@ export default function PaymentPage() {
     entryAt: "",
     plate: "",
     payToken: "",
+    paidAmount: 0,
   });
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -62,17 +64,6 @@ export default function PaymentPage() {
   )}:${String(minutesDifference).padStart(2, "0")}:${String(
     secondsDifference
   ).padStart(2, "0")}`;
-
-  const calculateTariff = (timeDifference: string): string => {
-    const timeParts = timeDifference.split(":");
-    const hours = parseInt(timeParts[0], 10);
-    const minutes = parseInt(timeParts[1], 10);
-    const totalMinutes = hours * 60 + minutes;
-    const tariff = Math.ceil(totalMinutes / 60) * 3;
-    return `R$ ${tariff.toFixed(2)}`;
-  };
-
-  const tariff = calculateTariff(formattedTimeDifference);
 
   const handlePayment = async () => {
     try {
@@ -146,7 +137,7 @@ export default function PaymentPage() {
           <div className="flex gap-[10px] items-center">
             <img src={dollarIcon} alt="" />
             <span className="text-[1.25rem] text-white font-poppins">
-              {tariff}
+              R$ {vehicle.paidAmount.toFixed(2)}
             </span>
           </div>
         </div>

@@ -12,7 +12,6 @@ function App() {
 
   const consulte = async () => {
     try {
-      // Simulação de uma requisição GET
       const response = await fetch(
         `https://karking-api.zaqbit.com/vehicles/${placa}`,
         {
@@ -23,11 +22,13 @@ function App() {
           },
         }
       );
+
       const data = await response.json();
 
       navigate("/payment", { state: { placaInfo: data } });
     } catch (error) {
       console.error("Erro ao buscar os dados:", error);
+      alert("Placa não encontrada");
     }
   };
 

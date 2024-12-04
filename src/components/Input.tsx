@@ -1,4 +1,5 @@
 import brazilFlag from "../assets/emojione-v1_flag-for-brazil.svg";
+import React from "react";
 
 type InputProps = {
   content: string;
@@ -6,7 +7,7 @@ type InputProps = {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function Input({ content }: InputProps) {
+export default function Input({ content, value, onChange }: InputProps) {
   return (
     <div className="mb-[30px]">
       <label
@@ -21,7 +22,16 @@ export default function Input({ content }: InputProps) {
         </h6>
         <img src={brazilFlag} alt="" className="absolute top-[2px] right-1" />
       </div>
-      <input placeholder="BRA3R52" type="text" maxLength={7} name="input" id="input" className="w-52 py-3 text-center outline-none font-pt-sans-narrow text-[1.25rem] uppercase rounded-b-[5px]" />
+      <input
+        placeholder="BRA3R52"
+        value={value}
+        onChange={onChange}
+        type="text"
+        maxLength={7}
+        name="input"
+        id="input"
+        className="w-52 py-3 text-center outline-none font-pt-sans-narrow text-[1.25rem] uppercase rounded-b-[5px]"
+      />
     </div>
   );
 }
