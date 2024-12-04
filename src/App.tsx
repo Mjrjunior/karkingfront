@@ -22,9 +22,10 @@ function App() {
           },
         }
       );
-
+      if (!response.ok) {
+        throw new Error("Erro na requisição");
+      }
       const data = await response.json();
-
       navigate("/payment", { state: { placaInfo: data } });
     } catch (error) {
       console.error("Erro ao buscar os dados:", error);
