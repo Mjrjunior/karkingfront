@@ -17,7 +17,7 @@ interface Vehicle {
   entryAt: string;
   plate: string;
   payToken: string;
-  paidAmount: number;
+  amountToPay: number;
 }
 
 export default function PaymentPage() {
@@ -28,7 +28,7 @@ export default function PaymentPage() {
     entryAt: "",
     plate: "",
     payToken: "",
-    paidAmount: 0,
+    amountToPay: 0,
   });
   const [currentTime, setCurrentTime] = useState(new Date());
   const [token, setToken] = useState<string>("");
